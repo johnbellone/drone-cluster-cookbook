@@ -13,8 +13,8 @@ module DroneClusterCookbook
       provides(:drone_config)
 
       attribute(:path, kind_of: String, name_attribute: true)
-      attribute(:owner, kind_of: String, default: 'drone')
-      attribute(:group, kind_of: String, default: 'drone')
+      attribute(:owner, kind_of: String)
+      attribute(:group, kind_of: String)
       attribute(:mode, kind_of: String, default: '0640')
 
       attribute(:database_driver, equal_to: %w{mysql postgres sqlite})

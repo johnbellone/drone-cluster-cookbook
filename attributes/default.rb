@@ -4,8 +4,8 @@
 #
 # Copyright 2015, Bloomberg Finance L.P.
 #
-default['drone']['service_name'] = 'drone'
-default['drone']['service_user'] = 'drone'
-default['drone']['service_group'] = 'drone'
-
 default['drone']['config']['path'] = '/etc/default/drone'
+
+default['drone']['service_name'] = 'drone'
+default['drone']['image_repo'] = 'drone/drone'
+default['drone']['image_tag'] = '0.4.0'

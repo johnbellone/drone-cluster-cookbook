@@ -4,22 +4,25 @@
 #
 # Copyright 2015, Bloomberg Finance L.P.
 #
-include_recipe 'build-essential::default'
-
-node.default['go']['version'] = '1.5'
-node.default['go']['from_source'] = true
-include_recipe 'golang::default'
-
-poise_service_user node['drone']['service_user'] do
-  group node['drone']['service_group']
-end
-
-drone_config node['drone']['service_name'] do |r|
+config = drone_config node['drone']['service_name'] do |r|
   node['drone']['config'].each_pair { |k,v| r.send(k, v) }
-  notifies :restart, "drone_service[#{name}]", :delayed
+  notifies :restart, "docker_container[#{name}]", :delayed
 end
 
-drone_service node['drone']['service_name'] do |r|
-  config_file node['drone']['config']['path']
-  node['drone']['service'].each_pair { |k,v| r.send(k, v) }
+docker_service 'default' do
+  action [:create, :start]
+end
+
+docker_image node['drone']['service_name'] do
+  repo node['drone']['image_repo']
+  tag node['drone']['image_tag']
+  notifies :restart, "docker_container[#{name}]", :delayed
+end
+
+docker_container node['drone']['service_name'] do
+  repo node['drone']['image_repo']
+  tag node['drone']['image_tag']
+  command ['drone', '-env-file', config.path].join(' ')
+  binds [config.path, config.path].join(':')
+  action :run_if_missing
 end

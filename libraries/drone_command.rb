@@ -16,7 +16,7 @@ module DroneClusterCookbook
 
       attribute(:command, kind_of: String, name_attribute: true)
       attribute(:token, kind_of: String, required: true)
-      attribute(:server, kind_of: String, default: '')
+      attribute(:server, kind_of: String, required: true)
 
       action(:run) do
         notifying block do

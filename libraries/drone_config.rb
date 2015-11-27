@@ -8,6 +8,8 @@ require 'poise'
 
 module DroneClusterCookbook
   module Resource
+    # A custom resource for managing Drone service configuration.
+    # @since 1.0.0
     class DroneConfig < Chef::Resource
       include Poise(fused: true)
       provides(:drone_config)

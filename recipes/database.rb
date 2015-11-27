@@ -4,4 +4,4 @@
 #
 # Copyright 2015, Bloomberg Finance L.P.
 #
-include_recipe 'postgres::default'
+include_recipe 'postgresql::server'

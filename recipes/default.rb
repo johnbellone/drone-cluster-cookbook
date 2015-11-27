@@ -16,6 +16,7 @@ end
 
 drone_config node['drone']['service_name'] do |r|
   node['drone']['config'].each_pair { |k,v| r.send(k, v) }
+  notifies :restart, "drone_service[#{name}]", :delayed
 end
 
 drone_service node['drone']['service_name'] do |r|

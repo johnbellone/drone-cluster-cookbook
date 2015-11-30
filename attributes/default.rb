@@ -4,7 +4,7 @@
 #
 # Copyright 2015, Bloomberg Finance L.P.
 #
-default['drone']['config']['path'] = '/etc/default/drone'
+default['drone']['config']['path'] = '/etc/drone/dronerc'
 
 default['drone']['service_name'] = 'drone'
 default['drone']['image_repo'] = 'drone/drone'

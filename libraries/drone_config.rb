@@ -27,7 +27,7 @@ module DroneClusterCookbook
       attribute(:plugin_filter, kind_of: [Array, String])
       attribute(:remote_driver, equal_to: %w{github github_enterprise bitbucket gitlab})
       attribute(:remote_config, kind_of: String)
-      attribute(:server_address, kind_of: String, default: ':8080')
+      attribute(:server_port, kind_of: Integer, default: 8_000)
       attribute(:server_ssl_key, kind_of: String)
       attribute(:server_ssl_certificate, kind_of: String)
 
@@ -37,7 +37,7 @@ module DroneClusterCookbook
           h.merge('DATABASE_CONFIG' => database_config) if database_config
           h.merge('REMOTE_DRIVER' => remote_driver) if remote_driver
           h.merge('REMOTE_CONFIG' => remote_config) if remote_config
-          h.merge('SERVER_ADDR' => server_address) if server_address
+          h.merge('SERVER_ADDR' => ":#{server_port}") if server_port
           h.merge('SERVER_KEY' => server_ssl_key) if server_ssl_key
           h.merge('SERVER_CERT' => server_ssl_certificate) if server_ssl_certificate
           h.merge('HTTP_PROXY' => http_proxy) if http_proxy
@@ -49,6 +49,10 @@ module DroneClusterCookbook
 
       action(:create) do
         notifying_block do
+          directory ::File.dirname(new_resource.path) do
+            recursive true
+          end
+
           rc_file new_resource.path do
             type 'bash'
             mode new_resource.mode
@@ -62,7 +66,7 @@ module DroneClusterCookbook
       action(:delete) do
         notifying_block do
           rc_file new_resource.path do
-            action :delete
+            agction :delete
           end
         end
       end

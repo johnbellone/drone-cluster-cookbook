@@ -22,7 +22,10 @@ end
 docker_container node['drone']['service_name'] do
   repo node['drone']['image_repo']
   tag node['drone']['image_tag']
-  command ['drone', '-env-file', config.path].join(' ')
-  binds [config.path, config.path].join(':')
-  action :run_if_missing
+  command ['drone', '--env-file', config.path].join(' ')
+  volumes ['/var/lib/drone:/var/lib/drone', '/var/run/docker.sock:/var/run/docker.sock']
+  restart_policy 'always'
+  detach true
+  port '80:8000'
+  binds "#{config.path}:/etc/drone/dronerc"
 end

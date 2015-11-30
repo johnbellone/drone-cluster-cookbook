@@ -8,4 +8,4 @@ default['drone']['config']['path'] = '/etc/default/drone'
 
 default['drone']['service_name'] = 'drone'
 default['drone']['image_repo'] = 'drone/drone'
-default['drone']['image_tag'] = '0.4.0'
+default['drone']['image_tag'] = 'latest'

@@ -58,6 +58,14 @@ module DroneClusterCookbook
           end
         end
       end
+
+      action(:delete) do
+        notifying_block do
+          rc_file new_resource.path do
+            action :delete
+          end
+        end
+      end
     end
   end
 end

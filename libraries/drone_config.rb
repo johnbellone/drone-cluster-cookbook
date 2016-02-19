@@ -2,7 +2,7 @@
 # Cookbook: drone-cluster
 # License: Apache 2.0
 #
-# Copyright 2015, Bloomberg Finance L.P.
+# Copyright 2015-2016, Bloomberg Finance L.P.
 #
 require 'poise'
 
@@ -21,6 +21,7 @@ module DroneClusterCookbook
 
       attribute(:database_driver, equal_to: %w{mysql postgres sqlite})
       attribute(:database_config, kind_of: String)
+      attribute(:debug, equal_to: [true, false])
       attribute(:http_proxy, kind_of: String)
       attribute(:https_proxy, kind_of: String)
       attribute(:no_proxy, kind_of: String)
@@ -35,6 +36,7 @@ module DroneClusterCookbook
         {}.tap do |h|
           h.merge('DATABASE_DRIVER' => database_driver) if database_driver
           h.merge('DATABASE_CONFIG' => database_config) if database_config
+          h.merge('DEBUG' => true) if debug
           h.merge('REMOTE_DRIVER' => remote_driver) if remote_driver
           h.merge('REMOTE_CONFIG' => remote_config) if remote_config
           h.merge('SERVER_ADDR' => ":#{server_port}") if server_port
